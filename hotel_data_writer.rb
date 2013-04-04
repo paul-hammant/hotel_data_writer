@@ -11,5 +11,5 @@ post '/createOrLocate' do
 end
 
 get '/hotel/:state/:zip/:city/:name' do |state, zip, city, name|
-    "Hotel data for #{state} #{zip} #{city} #{name}"
+    send_file 'edit.html'
 end
