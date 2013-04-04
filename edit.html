@@ -2,6 +2,18 @@
 <html>
     <head>
         <title>Hotel Data Writer (Edit Mode)</title>
+        <script type="text/javascript" ng:autobind src="js/angular-0.9.19.min.js"></script>
+<script type="text/javascript">
+    function MyController($resource) {
+		
+		var self = this,
+			prefix = window.location.href;
+		alert(prefix);
+		
+		// the main story + steps resource, loaded asynchronously
+        this.data = $resource(prefix).get({});
+    }
+</script>
     </head>
     <body>
         <h3>Edit Hotel Entry</h3><br/>
