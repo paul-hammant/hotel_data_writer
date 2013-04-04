@@ -7,8 +7,7 @@
     function MyController($resource) {
 		
 		var self = this,
-			prefix = window.location.pathname;
-		alert(prefix);
+			prefix = window.location.pathname + ".json";
 		
 		// the main story + steps resource, loaded asynchronously
         this.data = $resource(prefix).get({});
