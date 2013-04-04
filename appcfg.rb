@@ -7,5 +7,9 @@ get '/' do
 end
 
 post '/createOrLocate' do
-    redirect "/" + params[:state] + "/" + params[:zip] + "/" + params[:city] + "/" + params[:name]
+    redirect "/hotel/" + params[:state] + "/" + params[:zip] + "/" + params[:city] + "/" + params[:name]
+end
+
+get '/hotel/:state/:zip/:city/:name' do |state, zip, city, name|
+    "Hotel data for #{state} #{zip} #{city} #{name}"
 end
