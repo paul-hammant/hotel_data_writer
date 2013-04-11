@@ -18,7 +18,7 @@ get '/:state/:zip/:city/:name.json' do |state, zip, city, name|
     hotelFile.read
 end
 
-put '/:state/:zip/:city/:name.json' do |state, zip, city, name|
+post '/:state/:zip/:city/:name.json' do |state, zip, city, name|
     content_type 'application/json', :charset => 'utf-8'
     content = request.body.read
 
