@@ -1,27 +1,34 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ng="http://angularjs.org" xml:lang="en" lang="en">
+<html ng-app="hotelDataWriter">
     <head>
         <title>Hotel Data Writer (Edit Mode)</title>
-        <script type="text/javascript" ng:autobind src="/js/angular-0.9.19.min.js"></script>
-<script type="text/javascript">
-    function MyController($resource) {
-		
-		var self = this,
-			prefix = window.location.pathname + ".json";
-		
-		// the main story + steps resource, loaded asynchronously
-        this.data = $resource(prefix).get({});
-    }
-</script>
+        <script type="text/javascript" ng:autobind src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js"></script>
+        <script type="text/javascript">
+            angular.module('hotelDataWriter', ['ngResource']);
+
+            function MyController($scope, $resource) {
+
+                var prefix = window.location.pathname + ".json";
+
+                $scope.server = $resource(prefix, {},
+                    {
+                        get: { method: 'GET' }
+                    }
+                );
+
+                $scope.data = $scope.server.get();
+            }
+        </script>
     </head>
     <body ng:controller="MyController">
         <h3>Edit Hotel Entry</h3><br/>
-		<form action="/edit">
-		  Street: <input name="data.street"  /><br/>
-		  Stars: <input name="data.stars"  /><br/>
-		  Phone: <input name="data.phone"  /><br/>
-		  URL: <input name="data.url"  />
-          <button type="submit">Create/Update</button>
-		</form>
+        <form action="/edit">
+            Street: <input ng-model="data.street"/><br/>
+            Stars: <input ng-model="data.stars"/><br/>
+            Phone: <input ng-model="data.phone"/><br/>
+            URL: <input ng-model="data.url"  />
+            <button type="submit">Create/Update</button>
+        </form>
     </body>
 </html>
