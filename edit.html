@@ -9,15 +9,9 @@
 
             function MyController($scope, $resource) {
 
-                var prefix = window.location.pathname + ".json";
+                var hotelDataUrl = window.location.pathname + ".json";
 
-                $scope.server = $resource(prefix, {},
-                    {
-                        get: { method: 'GET' }
-                    }
-                );
-
-                $scope.data = $scope.server.get();
+                $scope.data = $resource(hotelDataUrl).get();
             }
         </script>
     </head>
