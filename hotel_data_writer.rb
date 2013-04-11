@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'json'
 
 set :public_folder, File.dirname(__FILE__)
 
@@ -21,13 +22,15 @@ end
 post '/:state/:zip/:city/:name.json' do |state, zip, city, name|
     content_type 'application/json', :charset => 'utf-8'
     content = request.body.read
+    contentJson = JSON.parse(content)
+    contentPrettyPrint = JSON.pretty_generate(contentJson)
 
     hotelPath = "./#{state}/#{zip}/#{city}/#{name}.json"
     hotelFile = File.open(hotelPath, 'w')
-    hotelFile.write(content)
+    hotelFile.write(contentPrettyPrint)
     hotelFile.close
 
-    content
+    contentPrettyPrint
 end
 
 get '/:state/:zip/:city/:name' do |state, zip, city, name|
