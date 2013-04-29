@@ -1,32 +1,63 @@
 <!DOCTYPE html>
 <html ng-app="hotelDataWriter">
-    <head>
-        <title>Hotel Data Writer (Edit Mode)</title>
-        <script type="text/javascript" ng:autobind src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js"></script>
-        <script type="text/javascript">
-            angular.module('hotelDataWriter', ['ngResource']);
+<head>
+    <title>Hotel Data Writer (Add/Edit Hotel)</title>
+    <script type="text/javascript" ng:autobind
+            src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+    <script type="text/javascript"
+            src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.min.js"></script>
+    <script type="text/javascript">
+        angular.module('hotelDataWriter', ['ngResource']);
 
-            function MyController($scope, $resource) {
-                var hotelDataUrl = window.location.pathname + ".json";
-
-                $scope.data = $resource(hotelDataUrl).get();
-
-                $scope.SaveHotelData = function() {
-                    $resource(hotelDataUrl).save($scope.data);
-                }
+        function MyController($scope, $resource) {
+            var hotelKey = window.location.pathname;
+            var hotelKeyParts = hotelKey.split("/");
+            $scope.state = hotelKeyParts[1];
+            $scope.zip = hotelKeyParts[2];
+            $scope.city = hotelKeyParts[3].replace(/_/g, ' ');
+            $scope.name = hotelKeyParts[4].replace(/_/g, ' ');
+            $scope.data = $resource(hotelKey + ".json").get();
+            $scope.saveHotelData = function () {
+                $resource(hotelKey + ".json").save($scope.data);
             }
+        }
+    </script>
+</head>
+<body ng-controller="MyController">
+<h3>Edit Hotel Entry</h3>
 
-        </script>
-    </head>
-    <body ng-controller="MyController">
-        <h3>Edit Hotel Entry</h3><br/>
-        <form>
-            Street: <input ng-model="data.street"/><br/>
-            Stars: <input ng-model="data.stars"/><br/>
-            Phone: <input ng-model="data.phone"/><br/>
-            URL: <input ng-model="data.url"/>
-            <button ng-click="SaveHotelData()">Create/Update</button>
-        </form>
-    </body>
+<form>
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td>{{name}}</td>
+        </tr>
+        <tr>
+            <td>Street:</td>
+            <td><input ng-model="data.street" size="50"/></td>
+        </tr>
+        <tr>
+            <td>City:</td>
+            <td>{{city}}</td>
+        </tr>
+        <tr>
+            <td>State/Zip:</td>
+            <td>{{state}}, {{zip}}</td>
+        </tr>
+        <tr>
+            <td>Stars:</td>
+            <td><input ng-model="data.stars"/></td>
+        </tr>
+        <tr>
+            <td>Phone:</td>
+            <td><input ng-model="data.phone"/></td>
+        </tr>
+        <tr>
+            <td>URL:</td>
+            <td><input ng-model="data.url" size="80"/></td>
+        </tr>
+    </table>
+    <button ng-click="saveHotelData()">Create/Update</button>
+</form>
+</body>
 </html>
