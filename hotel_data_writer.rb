@@ -29,7 +29,7 @@ post '/:state/:zip/:city/:name.json' do |state, zip, city, name|
     FileUtils.mkdir_p(hotelDir)
     hotelPath = "#{hotelDir}/#{name}.json"
     hotelFile = File.open(hotelPath, 'w+')
-    // pretty_generate does not reorder nodes alphabetically, jshon does.
+    # pretty_generate does not reorder nodes alphabetically, jshon does.
     %x[jshon -ISF ./#{hotelPath}]
     hotelFile.write(contentJson)
 
