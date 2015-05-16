@@ -12,10 +12,11 @@
         myApp.controller('MyController', ['$scope', '$resource', function($scope, $resource) {
             var hotelKey = window.location.pathname;
             var hotelKeyParts = hotelKey.split("/");
-            $scope.state = hotelKeyParts[1];
-            $scope.zip = hotelKeyParts[2];
-            $scope.city = hotelKeyParts[3].replace(/_/g, ' ');
-            $scope.name = hotelKeyParts[4].replace(/_/g, ' ');
+            $scope.key = {};
+            $scope.key.state = hotelKeyParts[1];
+            $scope.key.zip = hotelKeyParts[2];
+            $scope.key.city = hotelKeyParts[3].replace(/_/g, ' ');
+            $scope.key.name = hotelKeyParts[4].replace(/_/g, ' ');
             $scope.data = $resource(hotelKey + ".json").get();
             $scope.saveHotelData = function () {
                 $resource(hotelKey + ".json").save($scope.data);
@@ -64,7 +65,7 @@
             Name:
         </label>
         <div class="9u">
-            {{name}}
+            {{key.name}}
         </div>
     </div>
     <div class="row">
@@ -80,7 +81,7 @@
             City:
         </div>
         <div class="9u">
-            {{city}}
+            {{key.city}}
         </div>
     </div>
     <div class="row">
@@ -88,7 +89,7 @@
             State/Zip:
         </div>
         <div class="9u">
-            {{state}}, {{zip}}
+            {{key.state}}, {{key.zip}}
         </div>
     </div>    
     <div class="row">
