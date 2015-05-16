@@ -23,42 +23,104 @@
         }]);
 
     </script>
+        <link rel="stylesheet" href="/css/common.css" />
+        <script src="/js/skel.min.js"></script>
+        <script>
+            skel.init({
+                reset: 'full',
+                breakpoints: {
+                    large: {
+                        media: '(min-width: 1025px) and (max-width: 1280px)',
+                        containers: 960
+                    },
+                    medium: {
+                        media: '(min-width: 568px) and (max-width: 1024px)',
+                        containers: '90%'
+                    },
+                    small: {
+                        media: '(max-width: 567px)',
+                        containers: '95%!',
+                        grid: {
+                            collapse: true
+                        }
+                    },
+                    xsmall: {
+                        media: '(max-width: 320px)'
+                    }
+                }
+            });
+        </script>    
 </head>
 <body ng-controller="MyController">
-<h3>Edit Hotel Entry</h3>
 
-<form>
-    <table>
-        <tr>
-            <td>Name:</td>
-            <td>{{name}}</td>
-        </tr>
-        <tr>
-            <td>Street:</td>
-            <td><input ng-model="data.street" size="50"/></td>
-        </tr>
-        <tr>
-            <td>City:</td>
-            <td>{{city}}</td>
-        </tr>
-        <tr>
-            <td>State/Zip:</td>
-            <td>{{state}}, {{zip}}</td>
-        </tr>
-        <tr>
-            <td>Stars:</td>
-            <td><input ng-model="data.stars"/></td>
-        </tr>
-        <tr>
-            <td>Phone:</td>
-            <td><input ng-model="data.phone"/></td>
-        </tr>
-        <tr>
-            <td>URL:</td>
-            <td><input ng-model="data.url" size="80"/> (<a ng-href="{{data.url}}" target="_blank">link</a>)</td>
-        </tr>
-    </table>
-    <button ng-click="saveHotelData()">Create/Update</button>
-</form>
+<div id="main" class="container">
+
+    <header id="header">
+        <h1>Edit Hotel Entry</h1>
+    </header>
+
+    <div class="row">
+        <label class="3u align-right">
+            Name:
+        </label>
+        <div class="9u">
+            {{name}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="3u align-right">
+            Street:
+        </div>
+        <div class="9u">
+            <input ng-model="data.street"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="3u align-right">
+            City:
+        </div>
+        <div class="9u">
+            {{city}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="3u align-right">
+            State/Zip:
+        </div>
+        <div class="9u">
+            {{state}}, {{zip}}
+        </div>
+    </div>    
+    <div class="row">
+        <div class="3u align-right">
+            Stars:
+        </div>
+        <div class="9u">
+            <input ng-model="data.stars"/>
+        </div>
+    </div>    
+    <div class="row">
+        <div class="3u align-right">
+            Phone:
+        </div>
+        <div class="9u">
+            <input ng-model="data.phone"/>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="3u align-right">
+            URL:
+        </div>
+        <div class="9u">
+            <span style="white-space: nowrap;"><input ng-model="data.url"/> (<a ng-href="{{data.url}}" target="_blank">link</a>)</span>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="3u">&nbsp;</div>
+        <div class="9u">
+            <button ng-click="saveHotelData()">Create/Update</button>
+        </div>
+    </div>       
+</div>
 </body>
 </html>
