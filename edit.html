@@ -4,23 +4,30 @@
     <title>Hotel Data Writer (Add/Edit Hotel)</title>
     <script type="text/javascript" ng:autobind
             src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-    <script type="text/javascript"
-            src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-resource.min.js"></script>
-    <script type="text/javascript">
-        var myApp = angular.module('hotelDataWriter', ['ngResource']);
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.1.1/angularfire.min.js"></script>
 
-        myApp.controller('MyController', ['$scope', '$resource', function($scope, $resource) {
+    <script type="text/javascript">
+        var myApp = angular.module('hotelDataWriter', ["firebase"]);
+        
+
+        myApp.controller('MyController', ['$scope', '$firebaseObject', function($scope, $firebaseObject) {
+            var ref = new Firebase('https://YOUR_FIREBASE_URL.firebaseio.com/');
+            var syncObject = $firebaseObject(ref);
             var hotelKey = window.location.pathname;
+            var hotelData = $firebaseObject(ref.child('hotels').child(hotelKey.replace(/_/g, ' ')));
             var hotelKeyParts = hotelKey.split("/");
             $scope.key = {};
             $scope.key.state = hotelKeyParts[1];
             $scope.key.zip = hotelKeyParts[2];
             $scope.key.city = hotelKeyParts[3].replace(/_/g, ' ');
             $scope.key.name = hotelKeyParts[4].replace(/_/g, ' ');
-            $scope.data = $resource(hotelKey + ".json").get();
-            $scope.saveHotelData = function () {
-                $resource(hotelKey + ".json").save($scope.data);
-            }
+
+            hotelData.$loaded().then(function() {
+                console.log("loaded record:", hotelData.$id);
+            });
+            $scope.data = hotelData;
+            hotelData.$bindTo($scope, "hotel"); // pushes UI changes to fairebase w/o save()
         }]);
 
     </script>
@@ -53,6 +60,7 @@
         </script>    
 </head>
 <body ng-controller="MyController">
+
 
 <div id="main" class="container">
 
@@ -116,12 +124,6 @@
             <span style="white-space: nowrap;"><input ng-model="data.url"/> (<a ng-href="{{data.url}}" target="_blank">link</a>)</span>
         </div>
     </div>  
-    <div class="row">
-        <div class="3u">&nbsp;</div>
-        <div class="9u">
-            <button ng-click="saveHotelData()">Create/Update</button>
-        </div>
-    </div>       
 </div>
 </body>
 </html>
